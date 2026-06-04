@@ -1,0 +1,3 @@
+spring:
+  application:
+    name: sping-boot-authentication
