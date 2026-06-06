@@ -2,8 +2,12 @@ package com.upskillingerp.spingbootauthentication.controller;
 
 import com.upskillingerp.spingbootauthentication.dto.LoginRequest;
 import com.upskillingerp.spingbootauthentication.dto.RegisterRequest;
+import com.upskillingerp.spingbootauthentication.dto.api_response.ApiResponse;
 import com.upskillingerp.spingbootauthentication.dto.auth.AuthResponse;
+import com.upskillingerp.spingbootauthentication.entity.User;
+import com.upskillingerp.spingbootauthentication.repository.UserRepository;
 import com.upskillingerp.spingbootauthentication.service.AuthService;
+import com.upskillingerp.spingbootauthentication.service.JwtService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -16,6 +20,9 @@ import org.springframework.web.bind.annotation.RestController;
 public class AuthController {
 
     private final AuthService authService;
+    private final JwtService jwtService;
+
+    private final UserRepository userRepository;
 
     @PostMapping("/register")
     public String register(
@@ -25,9 +32,25 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public AuthResponse login(
+    public ApiResponse<AuthResponse> login(
             @RequestBody LoginRequest request
     ) {
-        return authService.login(request);
+
+        User user = userRepository
+                .findByEmail(request.getEmail())
+                .orElseThrow(
+                        () -> new RuntimeException(
+                                "User not found"
+                        )
+                );
+
+        String token =
+                jwtService.generateToken(user);
+
+        return new ApiResponse<>(
+                true,
+                "Login successful",
+                new AuthResponse(token)
+        );
     }
 }
