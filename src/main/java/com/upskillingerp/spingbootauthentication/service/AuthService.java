@@ -2,6 +2,7 @@ package com.upskillingerp.spingbootauthentication.service;
 
 import com.upskillingerp.spingbootauthentication.dto.LoginRequest;
 import com.upskillingerp.spingbootauthentication.dto.RegisterRequest;
+import com.upskillingerp.spingbootauthentication.dto.auth.AuthResponse;
 import com.upskillingerp.spingbootauthentication.entity.User;
 import com.upskillingerp.spingbootauthentication.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -11,6 +12,8 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class AuthService {
+
+    private final JwtService jwtService;
 
     private final UserRepository userRepository;
 
@@ -44,7 +47,7 @@ public class AuthService {
         return "User registered";
     }
 
-    public String login(LoginRequest request) {
+    public AuthResponse login(LoginRequest request) {
 
         User user = userRepository
                 .findByEmail(request.getEmail())
@@ -66,6 +69,9 @@ public class AuthService {
             );
         }
 
-        return "Login successful";
+        String token =
+                jwtService.generateToken(user);
+
+        return new AuthResponse(token);
     }
 }
