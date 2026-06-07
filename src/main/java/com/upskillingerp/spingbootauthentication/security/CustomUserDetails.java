@@ -25,7 +25,7 @@ public class CustomUserDetails
 
             return List.of(
                     new SimpleGrantedAuthority(
-                            "ROLE" + user.getRole().name()
+                            "ROLE_" + user.getRole().name()
                     )
             );
     }
