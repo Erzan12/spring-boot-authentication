@@ -1,4 +1,4 @@
-package com.upskillingerp.spingbootauthentication.dto.admin_request;
+package com.upskillingerp.spingbootauthentication.dto.admin.admin_request;
 
 import com.upskillingerp.spingbootauthentication.enums.Role;
 import lombok.Data;
