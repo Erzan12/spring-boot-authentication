@@ -1,11 +1,13 @@
 package com.upskillingerp.spingbootauthentication.service.admin;
 
-import com.upskillingerp.spingbootauthentication.dto.admin_request.CreateUserRequest;
+import com.upskillingerp.spingbootauthentication.dto.admin.admin_request.CreateUserRequest;
+import com.upskillingerp.spingbootauthentication.dto.admin.admin_response.GetUserListResponse;
 import com.upskillingerp.spingbootauthentication.entity.User;
 import com.upskillingerp.spingbootauthentication.repository.UserRepository;
-import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 //@RequiredArgsConstructor
@@ -45,5 +47,9 @@ public class AdminService {
         userRepository.save(user);
 
         return "User registered successfully";
+    }
+
+    public List<User> getRegisteredUsers() {
+        return userRepository.findAll();
     }
 }
