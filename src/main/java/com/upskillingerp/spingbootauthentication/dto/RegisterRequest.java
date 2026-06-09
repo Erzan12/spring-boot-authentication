@@ -11,5 +11,4 @@ public class RegisterRequest {
     private String password;
     private Integer age;
     private String address;
-    private Role role;
 }
