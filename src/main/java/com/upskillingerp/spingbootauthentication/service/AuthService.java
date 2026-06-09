@@ -4,6 +4,7 @@ import com.upskillingerp.spingbootauthentication.dto.LoginRequest;
 import com.upskillingerp.spingbootauthentication.dto.RegisterRequest;
 import com.upskillingerp.spingbootauthentication.dto.auth.AuthResponse;
 import com.upskillingerp.spingbootauthentication.entity.User;
+import com.upskillingerp.spingbootauthentication.enums.Role;
 import com.upskillingerp.spingbootauthentication.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -39,7 +40,7 @@ public class AuthService {
                 )
                 .age(request.getAge())
                 .address(request.getAddress())
-                .role(request.getRole())
+                .role(Role.USER)
                 .build();
 
         userRepository.save(user);
