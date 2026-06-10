@@ -49,7 +49,19 @@ public class AdminService {
         return "User registered successfully";
     }
 
-    public List<User> getRegisteredUsers() {
-        return userRepository.findAll();
+    public List<GetUserListResponse> getRegisteredUsers() {
+        return userRepository.findAll()
+                .stream()
+                .map(user -> {
+                    GetUserListResponse response = new GetUserListResponse();
+                    response.setName(user.getName());
+                    response.setEmail(user.getEmail());
+                    response.setAge(user.getAge());
+                    response.setAddress(user.getAddress());
+                    response.setRole(user.getRole());
+
+                    return response;
+                })
+                .toList();
     }
 }
