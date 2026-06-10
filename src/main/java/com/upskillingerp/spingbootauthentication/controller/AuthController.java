@@ -35,22 +35,13 @@ public class AuthController {
     public ApiResponse<AuthResponse> login(
             @RequestBody LoginRequest request
     ) {
-
-        User user = userRepository
-                .findByEmail(request.getEmail())
-                .orElseThrow(
-                        () -> new RuntimeException(
-                                "User not found"
-                        )
-                );
-
-        String token =
-                jwtService.generateToken(user);
+        AuthResponse response =
+                authService.login(request);
 
         return new ApiResponse<>(
                 true,
                 "Login successful",
-                new AuthResponse(token)
+                response
         );
     }
 }
