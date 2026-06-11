@@ -5,6 +5,8 @@ import com.upskillingerp.spingbootauthentication.dto.RegisterRequest;
 import com.upskillingerp.spingbootauthentication.dto.auth.AuthResponse;
 import com.upskillingerp.spingbootauthentication.entity.User;
 import com.upskillingerp.spingbootauthentication.enums.Role;
+import com.upskillingerp.spingbootauthentication.exception.EmailAlreadyExistsException;
+import com.upskillingerp.spingbootauthentication.exception.InvalidCredentialsException;
 import com.upskillingerp.spingbootauthentication.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -25,9 +27,7 @@ public class AuthService {
         if(userRepository
                 .findByEmail(request.getEmail())
                 .isPresent()) {
-            throw new RuntimeException(
-                    "Email already exist"
-            );
+            throw new EmailAlreadyExistsException("Email already exists");
         }
 
         User user = User.builder()
@@ -65,9 +65,7 @@ public class AuthService {
                 );
 
         if(!matches) {
-            throw new RuntimeException(
-                    "Invalid credentials"
-            );
+            throw new InvalidCredentialsException("Invalid credentials");
         }
 
         String token =

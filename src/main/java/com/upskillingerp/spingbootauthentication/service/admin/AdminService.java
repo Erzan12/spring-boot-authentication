@@ -3,6 +3,7 @@ package com.upskillingerp.spingbootauthentication.service.admin;
 import com.upskillingerp.spingbootauthentication.dto.admin.admin_request.CreateUserRequest;
 import com.upskillingerp.spingbootauthentication.dto.admin.admin_response.GetUserListResponse;
 import com.upskillingerp.spingbootauthentication.entity.User;
+import com.upskillingerp.spingbootauthentication.exception.EmailAlreadyExistsException;
 import com.upskillingerp.spingbootauthentication.repository.UserRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -26,9 +27,7 @@ public class AdminService {
         if(userRepository
                 .findByEmail(request.getEmail())
                 .isPresent()) {
-            throw new RuntimeException(
-                    "Email already exist"
-            );
+            throw new EmailAlreadyExistsException("Email already exists");
         }
 
         User user = User.builder()
