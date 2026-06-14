@@ -53,6 +53,7 @@ public class AdminService {
                 .stream()
                 .map(user -> {
                     GetUserListResponse response = new GetUserListResponse();
+                    response.setId(user.getId());
                     response.setName(user.getName());
                     response.setEmail(user.getEmail());
                     response.setAge(user.getAge());
