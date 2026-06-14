@@ -1,6 +1,7 @@
 package com.upskillingerp.spingbootauthentication.controller;
 
 import com.upskillingerp.spingbootauthentication.dto.admin.admin_request.CreateUserRequest;
+import com.upskillingerp.spingbootauthentication.dto.admin.admin_request.UpdateUserRequest;
 import com.upskillingerp.spingbootauthentication.dto.admin.admin_response.GetUserListResponse;
 import com.upskillingerp.spingbootauthentication.dto.api_response.ApiResponse;
 import com.upskillingerp.spingbootauthentication.entity.User;
@@ -29,6 +30,15 @@ public class AdminController {
             @RequestBody CreateUserRequest request
     ) {
         return adminService.registerUser(request);
+    }
+
+    @PutMapping("/users/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
+    public String updateRegisteredUser(
+            @PathVariable Long id,
+            @RequestBody UpdateUserRequest request
+    ) {
+        return adminService.updateRegisteredUser(id, request);
     }
 
     @GetMapping("/users")

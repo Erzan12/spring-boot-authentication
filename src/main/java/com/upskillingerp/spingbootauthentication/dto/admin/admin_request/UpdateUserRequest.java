@@ -1,10 +1,10 @@
-package com.upskillingerp.spingbootauthentication.dto.admin.admin_response;
+package com.upskillingerp.spingbootauthentication.dto.admin.admin_request;
 
 import com.upskillingerp.spingbootauthentication.enums.Role;
 import lombok.Data;
 
 @Data
-public class GetUserListResponse {
+public class UpdateUserRequest {
 
     private Long id;
     private String name;

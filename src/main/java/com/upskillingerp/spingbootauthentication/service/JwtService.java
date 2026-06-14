@@ -60,7 +60,7 @@ public class JwtService {
                 .expiration(
                         new Date(
                                 System.currentTimeMillis()
-                                + 360000
+                                + 3600000
                         )
                 )
                 // with helper configuration
