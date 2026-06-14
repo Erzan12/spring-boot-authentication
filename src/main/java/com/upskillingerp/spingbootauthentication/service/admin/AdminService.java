@@ -74,7 +74,7 @@ public class AdminService {
         if (request.getRole() != null) {
             user.setRole(request.getRole());
         }
-        
+
         userRepository.save(user);
 
         return "User updated successfully";
