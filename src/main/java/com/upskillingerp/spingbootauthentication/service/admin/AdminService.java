@@ -1,9 +1,11 @@
 package com.upskillingerp.spingbootauthentication.service.admin;
 
 import com.upskillingerp.spingbootauthentication.dto.admin.admin_request.CreateUserRequest;
+import com.upskillingerp.spingbootauthentication.dto.admin.admin_request.UpdateUserRequest;
 import com.upskillingerp.spingbootauthentication.dto.admin.admin_response.GetUserListResponse;
 import com.upskillingerp.spingbootauthentication.entity.User;
 import com.upskillingerp.spingbootauthentication.exception.EmailAlreadyExistsException;
+import com.upskillingerp.spingbootauthentication.exception.NotFoundException;
 import com.upskillingerp.spingbootauthentication.repository.UserRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -46,6 +48,36 @@ public class AdminService {
         userRepository.save(user);
 
         return "User registered successfully";
+    }
+
+    public String updateRegisteredUser(Long id, UpdateUserRequest request) {
+
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("User not found"));
+
+        if (request.getEmail() != null) {
+            user.setEmail(request.getEmail());
+        }
+
+        if (request.getName() != null) {
+            user.setName(request.getName());
+        }
+
+        if (request.getAge() != null) {
+            user.setAge(request.getAge());
+        }
+
+        if (request.getAddress() != null) {
+            user.setAddress(request.getAddress());
+        }
+
+        if (request.getRole() != null) {
+            user.setRole(request.getRole());
+        }
+        
+        userRepository.save(user);
+
+        return "User updated successfully";
     }
 
     public List<GetUserListResponse> getRegisteredUsers() {
